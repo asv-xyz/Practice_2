@@ -54,10 +54,13 @@ int main(int argc, char* argv[]) {
 
     // receiving data
     char buffer[256] = {};
-    int valread = read(client_socket, buffer, 255);
-    if (valread < 0) {
-        perror("Failed to recive data from client...");
-    } else printf("Received student info: %s\n", buffer);
+   int valread = recv(client_socket, buffer, sizeof(buffer) - 1, MSG_WAITALL);
+   if (valread <= 0) {
+       perror("Failed to receive data");
+   } else {
+       buffer[valread] = '\0';
+       printf("Received: %s\n", buffer);
+   }
 
     // closing sockets
     close(client_socket);
