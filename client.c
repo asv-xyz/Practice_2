@@ -33,9 +33,10 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }    
 
-    char buffer[256];
-    scanf("%255s", buffer);
-    write(network_socket, buffer, sizeof(buffer));
+    char buffer[256] = { 0 };
+    char* hello = "Hello world";
+    send(network_socket, hello, strlen(hello), 0);
+    valread = read(network_socket, buffer, 1023);
 
 	// then close the socket
 	close(network_socket);
