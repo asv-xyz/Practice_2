@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }    
 
-    char buffer[256];
-    scanf("%255s", buffer);
-    write(network_socket, buffer, sizeof(buffer));
+    // sending information
+    char message[256] = "Sukhorukov Alexander Vladislavovich KKSO-26-24 1 kurs";
+    send(network_socket, message, strlen(message), 0);
 
 	// then close the socket
 	close(network_socket);

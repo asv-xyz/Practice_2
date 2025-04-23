@@ -53,11 +53,19 @@ int main(int argc, char* argv[]) {
     printf("Client connected!\n");
 
     // receiving data
-    char buffer[256] = {};
-    int valread = read(client_socket, buffer, 255);
-    if (valread < 0) {
-        perror("Failed to recive data from client...");
-    } else printf("Received student info: %s\n", buffer);
+    char buffer[256] = { 0 };
+    int bytes_received = recv(client_socket, buffer, 256-1, 0);
+    
+    if (bytes_received < 0) {
+        perror("Failed to receive data");
+    } else {
+        buffer[bytes_received] = '\0';
+        printf("Received: ");
+        for (int i = 0; i < 53 && i < bytes_received; i++) {
+            printf("%c", buffer[i]);
+        }
+        printf("\n");
+    }
 
     // closing sockets
     close(client_socket);
